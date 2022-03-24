@@ -1,9 +1,11 @@
-const appendBtn = document.querySelector('.add-button');
+const appendBtn = document.getElementById('add-button');
 const taskInput = document.getElementById('task-description');
 const tasksWrapper = document.querySelector('.tasks-wrapper');
 
 let tasks;
 !localStorage.tasks ? tasks = [] : tasks = JSON.parse(localStorage.getItem('tasks'));
+
+let taskItems = [];
 
 function Task(description) {
     this.description = description;
@@ -19,13 +21,13 @@ const createTemplate = (task, index) => {
                 <button class="delete-btn">Delete</button>
             </div>
         </div>
-    `;
+    `
 };
 
 const fillHtmlList = () => {
     tasksWrapper.innerHTML = "";
     if (tasks.length > 0) {
-        tasks.forEach(item, index => {
+        tasks.forEach((item, index) => {
             tasksWrapper.innerHTML += createTemplate(item, index);
         });
     }
@@ -37,7 +39,20 @@ const updateLocal = () => {
     localStorage.setItem('tasks', JSON.stringify(tasks));
 };
 
+const finishTask = index => {
+    tasks[index].completed = !tasks[index].completed;
+    if (tasks[index].completed) {
+        taskItems[index].classList.add('checked');
+    } else {
+        taskItems[index].classList.remove('checked');
+    }
+    updateLocal();
+    fillHtmlList();
+}
+
 appendBtn.addEventListener('click', () => {
     tasks.push(new Task(taskInput.value));
     updateLocal();
+    fillHtmlList();
+    taskInput.value = '';
 });

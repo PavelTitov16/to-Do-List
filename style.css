@@ -42,7 +42,7 @@ html, body {
     justify-content: flex-end;
 }
 
-.add-button {
+#add-button {
     width: 80%;
     background-color: springgreen;
     color: #fff;
