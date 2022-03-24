@@ -1,0 +1,54 @@
+html, body {
+    margin: 0;
+    height: 100%;
+    background-color: cadetblue;
+    font-family: 'Oswald', sans-serif;
+}
+
+.title {
+    text-align: center;
+}
+
+.main-wrapper {
+    display: flex;
+    flex-flow: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+.add-wrapper {
+    display:flex;
+    width: 500px;
+    min-height: 40px;
+    align-items: center;
+    background-color: darkgoldenrod;
+    border-radius: 5px;
+    padding: 10px;
+}
+
+.input-wrapper {
+    width: 80%;
+}
+
+.description {
+    width: 100%;
+    height: 25px;
+}
+
+.button-wrapper {
+    width: 20%;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.add-button {
+    width: 80%;
+    background-color: springgreen;
+    color: #fff;
+    outline: none;
+    border: none;
+    height: 25px;
+    cursor: pointer;
+}
+
