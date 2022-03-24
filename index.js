@@ -17,19 +17,27 @@ const createTemplate = (task, index) => {
         <div class="task-item ${task.completed ? 'checked' : ''}">
             <div class="description">${task.description}</div>
             <div class="buttons">
-                <input class="finish-btn" type="checkbox" ${task.completed ? 'checked' : ''}>
-                <button class="delete-btn">Delete</button>
+                <input onclick="finishTask(${index})" class="finish-btn" type="checkbox" ${task.completed ? 'checked' : ''}>
+                <button onclick="deleteTask(${index})" class="delete-btn">Delete</button>
             </div>
         </div>
     `
 };
 
+const filterTasks = () => {
+    const activeTasks = tasks.length && tasks.filter(item => item.completed == false);
+    const finishedTasks = tasks.length && tasks.filter(item => item.completed == true);
+    tasks = [...activeTasks,...finishedTasks];
+}
+
 const fillHtmlList = () => {
     tasksWrapper.innerHTML = "";
     if (tasks.length > 0) {
+        filterTasks();
         tasks.forEach((item, index) => {
             tasksWrapper.innerHTML += createTemplate(item, index);
         });
+        taskItems = document.querySelectorAll('.task-item');
     }
 };
 
@@ -39,7 +47,7 @@ const updateLocal = () => {
     localStorage.setItem('tasks', JSON.stringify(tasks));
 };
 
-const finishTask = index => {
+const finishTask = (index) => {
     tasks[index].completed = !tasks[index].completed;
     if (tasks[index].completed) {
         taskItems[index].classList.add('checked');
@@ -48,7 +56,7 @@ const finishTask = index => {
     }
     updateLocal();
     fillHtmlList();
-}
+};
 
 appendBtn.addEventListener('click', () => {
     tasks.push(new Task(taskInput.value));
@@ -56,3 +64,12 @@ appendBtn.addEventListener('click', () => {
     fillHtmlList();
     taskInput.value = '';
 });
+
+const deleteTask = (index) => {
+    taskItems[index].classList.add('delition');
+    setTimeout(() => {
+        tasks.splice(index, 1);
+        updateLocal();
+        fillHtmlList();
+    }, 500);
+};
